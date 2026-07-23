@@ -1,0 +1,21 @@
+{
+  "id": "trace-1784814325184",
+  "bugReport": "Empty cart checkout shows error",
+  "targetUrl": "http://localhost:3001?breakSelector=checkout",
+  "startedAt": "2026-07-23T13:45:25.184Z",
+  "reproduced": false,
+  "steps": [
+    {
+      "step": 1,
+      "reasoning": "Fallback heuristic: click checkout to surface the bug",
+      "action": {
+        "type": "done",
+        "summary": "Checkout control not found",
+        "reproduced": false
+      },
+      "snapshotHash": "44136fa355b3"
+    }
+  ],
+  "finalSummary": "Checkout control not found",
+  "completedAt": "2026-07-23T13:45:25.917Z"
+}

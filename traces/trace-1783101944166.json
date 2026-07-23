@@ -1,0 +1,31 @@
+{
+  "id": "trace-1783101944166",
+  "bugReport": "When I click Checkout with an empty cart, the app shows an error",
+  "targetUrl": "http://localhost:3001",
+  "startedAt": "2026-07-03T18:05:44.166Z",
+  "reproduced": true,
+  "steps": [
+    {
+      "step": 1,
+      "reasoning": "Fallback heuristic: click checkout to surface the bug",
+      "action": {
+        "type": "click",
+        "role": "button",
+        "name": "Checkout"
+      },
+      "snapshotHash": "f5d6d708f251"
+    },
+    {
+      "step": 2,
+      "reasoning": "Fallback heuristic: click checkout to surface the bug",
+      "action": {
+        "type": "click",
+        "role": "button",
+        "name": "Checkout"
+      },
+      "snapshotHash": "f5d6d708f251"
+    }
+  ],
+  "finalSummary": "Fallback heuristic reproduced the bug: When I click Checkout with an empty cart, the app shows an error",
+  "completedAt": "2026-07-03T18:05:46.680Z"
+}

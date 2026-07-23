@@ -1,0 +1,11 @@
+{
+  "id": "trace-1783101861135",
+  "bugReport": "When I click Checkout with an empty cart, the app shows an error",
+  "targetUrl": "http://localhost:3001",
+  "startedAt": "2026-07-03T18:04:21.135Z",
+  "reproduced": false,
+  "steps": [],
+  "finalSummary": "Failed: Cannot read properties of undefined (reading 'snapshot')",
+  "error": "Cannot read properties of undefined (reading 'snapshot')",
+  "completedAt": "2026-07-03T18:04:23.294Z"
+}

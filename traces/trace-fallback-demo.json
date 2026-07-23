@@ -1,0 +1,35 @@
+{
+  "id": "trace-fallback-demo",
+  "bugReport": "When I click Checkout with an empty cart, the app shows an error instead of a friendly message",
+  "targetUrl": "http://localhost:3001",
+  "startedAt": "2026-07-03T00:00:00.000Z",
+  "completedAt": "2026-07-03T00:00:15.000Z",
+  "reproduced": true,
+  "finalSummary": "Clicked Checkout on empty cart; error alert displayed with 'cart is empty' message",
+  "steps": [
+    {
+      "step": 1,
+      "reasoning": "Navigate to shop and go to cart section",
+      "action": { "type": "navigate", "url": "http://localhost:3001" },
+      "snapshotHash": "abc123def456"
+    },
+    {
+      "step": 2,
+      "reasoning": "Click Checkout button with empty cart to reproduce bug",
+      "action": { "type": "click", "role": "button", "name": "Checkout" },
+      "snapshotHash": "def456ghi789"
+    },
+    {
+      "step": 3,
+      "reasoning": "Verify error message is shown",
+      "action": { "type": "assert_text", "text": "cart is empty", "present": true },
+      "snapshotHash": "ghi789jkl012"
+    },
+    {
+      "step": 4,
+      "reasoning": "Bug reproduced successfully",
+      "action": { "type": "done", "summary": "Empty cart checkout shows error", "reproduced": true },
+      "snapshotHash": "jkl012mno345"
+    }
+  ]
+}

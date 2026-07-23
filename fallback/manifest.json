@@ -1,0 +1,9 @@
+{
+  "id": "fallback-empty-cart",
+  "description": "Pre-verified Playwright spec for empty cart checkout bug",
+  "specFile": "empty-cart-checkout.spec.ts",
+  "bugReport": "When I click Checkout with an empty cart, the app shows an error instead of a friendly message",
+  "targetUrl": "http://localhost:3001",
+  "verifiedRuns": 3,
+  "createdAt": "2026-07-03T00:00:00.000Z"
+}

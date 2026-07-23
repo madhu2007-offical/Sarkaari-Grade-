@@ -1,0 +1,33 @@
+{
+  "name": "sarkaari-grade-qa-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Autonomous browser QA agent: NL bug report → reproduce → codegen → verify → heal",
+  "workspaces": [
+    "demo-app",
+    "agent",
+    "codegen",
+    "verifier",
+    "healer",
+    "orchestrator",
+    "dashboard"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "demo": "concurrently -n demo,orch,dash -c blue,green,magenta \"npm run start -w demo-app\" \"npm run start -w orchestrator\" \"npm run start -w dashboard\"",
+    "postinstall": "npx playwright install chromium || true",
+    "agent": "npm run start -w agent",
+    "codegen": "npm run start -w codegen",
+    "verify": "npm run start -w verifier",
+    "heal": "npm run start -w healer",
+    "orchestrator": "npm run start -w orchestrator"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
