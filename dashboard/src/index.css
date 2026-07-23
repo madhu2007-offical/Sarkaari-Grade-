@@ -3,5 +3,24 @@
 @tailwind utilities;
 
 body {
-  @apply bg-slate-50 text-slate-900 min-h-screen;
+  @apply bg-[#0b0c0e] text-zinc-100 min-h-screen selection:bg-violet-500 selection:text-white;
+}
+
+/* Custom Scrollbar for a premium IDE feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121316;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27282f;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e3f4a;
 }
