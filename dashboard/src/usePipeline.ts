@@ -2,10 +2,14 @@ import { useEffect, useState, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 import { PipelineEvent } from "./types";
 
-const ORCHESTRATOR_URL =
-  import.meta.env.VITE_ORCHESTRATOR_URL || "http://localhost:3000";
-
 export function usePipeline() {
+  const [orchestratorUrl, setOrchestratorUrl] = useState(() => {
+    return (
+      localStorage.getItem("sarkaari_orchestrator_url") ||
+      import.meta.env.VITE_ORCHESTRATOR_URL ||
+      "http://localhost:3000"
+    );
+  });
   const [socket, setSocket] = useState<Socket | null>(null);
   const [connected, setConnected] = useState(false);
   const [running, setRunning] = useState(false);
@@ -13,7 +17,7 @@ export function usePipeline() {
   const [currentState, setCurrentState] = useState<string>("IDLE");
 
   useEffect(() => {
-    const s = io(ORCHESTRATOR_URL, { transports: ["websocket", "polling"] });
+    const s = io(orchestratorUrl, { transports: ["websocket", "polling"] });
 
     s.on("connect", () => setConnected(true));
     s.on("disconnect", () => setConnected(false));
@@ -46,11 +50,16 @@ export function usePipeline() {
     return () => {
       s.disconnect();
     };
+  }, [orchestratorUrl]);
+
+  const updateOrchestratorUrl = useCallback((newUrl: string) => {
+    localStorage.setItem("sarkaari_orchestrator_url", newUrl);
+    setOrchestratorUrl(newUrl);
   }, []);
 
   const startPipeline = useCallback(
     async (bugReport: string, targetUrl: string) => {
-      const res = await fetch(`${ORCHESTRATOR_URL}/api/run`, {
+      const res = await fetch(`${orchestratorUrl}/api/run`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bugReport, targetUrl }),
@@ -60,8 +69,17 @@ export function usePipeline() {
         throw new Error(err.error || "Failed to start pipeline");
       }
     },
-    []
+    [orchestratorUrl]
   );
 
-  return { socket, connected, running, events, currentState, startPipeline };
+  return {
+    socket,
+    connected,
+    running,
+    events,
+    currentState,
+    orchestratorUrl,
+    updateOrchestratorUrl,
+    startPipeline,
+  };
 }

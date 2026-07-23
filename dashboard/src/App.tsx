@@ -24,11 +24,25 @@ const PRESETS = [
 ];
 
 export default function App() {
-  const { connected, running, events, currentState, startPipeline } = usePipeline();
+  const { 
+    connected, 
+    running, 
+    events, 
+    currentState, 
+    orchestratorUrl, 
+    updateOrchestratorUrl, 
+    startPipeline 
+  } = usePipeline();
   const [bugReport, setBugReport] = useState(PRESETS[0].report);
   const [targetUrl, setTargetUrl] = useState(PRESETS[0].url);
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState<"logs" | "report" | "spec">("logs");
+  const [showSettings, setShowSettings] = useState(false);
+  const [inputUrl, setInputUrl] = useState(orchestratorUrl);
+
+  useEffect(() => {
+    setInputUrl(orchestratorUrl);
+  }, [orchestratorUrl]);
 
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -72,6 +86,44 @@ export default function App() {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
     localStorage.setItem("sarkaari_theme", nextTheme);
+  };
+
+  const getEventColors = (msg: string, state: string) => {
+    const lower = msg.toLowerCase();
+    const isError = lower.includes("error") || lower.includes("failed") || lower.includes("failure") || lower.includes("timeout") || lower.includes("offline") || lower.includes("disconnected");
+    const isSuccess = lower.includes("succeeded") || lower.includes("passed") || lower.includes("complete") || lower.includes("success");
+    const isWarning = lower.includes("retry") || lower.includes("retrying") || lower.includes("warn");
+    const isActive = state === currentState;
+
+    if (isError) {
+      return {
+        tag: isDark ? "text-red-400 bg-red-950/20 border border-red-900/30" : "text-red-700 bg-red-50 border border-red-200",
+        text: isDark ? "text-red-400" : "text-red-600 font-medium"
+      };
+    }
+    if (isSuccess) {
+      return {
+        tag: isDark ? "text-emerald-400 bg-emerald-950/20 border border-emerald-900/30" : "text-emerald-700 bg-emerald-50 border border-emerald-200",
+        text: isDark ? "text-emerald-400" : "text-emerald-600 font-medium"
+      };
+    }
+    if (isWarning) {
+      return {
+        tag: isDark ? "text-yellow-400 bg-yellow-950/20 border border-yellow-900/30" : "text-yellow-700 bg-yellow-50 border border-yellow-200",
+        text: isDark ? "text-yellow-500 font-medium" : "text-yellow-600 font-medium"
+      };
+    }
+    if (isActive) {
+      return {
+        tag: isDark ? "text-purple-400 bg-purple-950/20 border border-purple-900/30" : "text-purple-700 bg-purple-50 border border-purple-200",
+        text: isDark ? "text-purple-400" : "text-purple-700"
+      };
+    }
+    // Default is Info (Blue)
+    return {
+      tag: isDark ? "text-blue-400 bg-blue-950/20 border border-blue-900/30" : "text-blue-700 bg-blue-50 border border-blue-200",
+      text: isDark ? "text-blue-400" : "text-blue-600"
+    };
   };
 
   // Find healing or failure data in events
@@ -204,7 +256,67 @@ export default function App() {
             </span>
           </div>
 
-          <div className="h-4 w-[1px] bg-zinc-800" />
+          <div className={`h-4 w-[1px] ${isDark ? "bg-zinc-800" : "bg-slate-200"}`} />
+
+          {/* Orchestrator Settings */}
+          <div className="relative">
+            <button
+              onClick={() => {
+                setShowSettings(!showSettings);
+                setInputUrl(orchestratorUrl);
+              }}
+              className={`p-2 rounded-lg border transition-all ${
+                isDark 
+                  ? "bg-zinc-900 border-zinc-850 hover:border-zinc-700 text-zinc-400" 
+                  : "bg-white border-slate-200 hover:border-slate-300 text-slate-600 shadow-sm"
+              }`}
+              title="Configure Orchestrator URL"
+            >
+              {/* Gear Icon */}
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.43l-1.003.828c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.43l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.28z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </button>
+
+            {showSettings && (
+              <div className={`absolute right-0 mt-2 w-72 rounded-lg border p-4 shadow-xl z-50 transition-all ${
+                isDark ? "bg-[#0c0d0e] border-zinc-800 text-zinc-300 shadow-zinc-950/50" : "bg-white border-slate-200 text-slate-800 shadow-slate-200/50"
+              }`}>
+                <h4 className={`text-xs font-semibold font-mono uppercase tracking-wider mb-2.5 ${isDark ? "text-zinc-100" : "text-slate-900"}`}>Orchestrator URL</h4>
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <label className="text-[9px] text-zinc-500 font-mono uppercase">Backend Service Address</label>
+                    <input
+                      value={inputUrl}
+                      onChange={(e) => setInputUrl(e.target.value)}
+                      className={`w-full border rounded p-2.5 text-xs font-mono focus:outline-none focus:ring-1 ${
+                        isDark 
+                          ? "bg-[#070809] border-zinc-800 text-zinc-200 focus:border-violet-600 focus:ring-violet-600" 
+                          : "bg-slate-50 border-slate-200 text-slate-800 focus:border-violet-500 focus:ring-violet-500"
+                      }`}
+                      placeholder="e.g. http://192.168.1.15:3000"
+                    />
+                  </div>
+                  <p className="text-[10px] text-zinc-500 leading-normal font-sans">
+                    When testing from another device (like your phone), replace <code className="text-violet-500 font-mono">localhost</code> with your computer's local IP address (e.g. <code className="text-violet-500 font-mono">http://192.168.1.15:3000</code>).
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      updateOrchestratorUrl(inputUrl);
+                      setShowSettings(false);
+                    }}
+                    className="w-full py-2 rounded bg-violet-600 hover:bg-violet-500 text-white text-xs font-semibold uppercase tracking-wider transition duration-150"
+                  >
+                    Save & Reconnect
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className={`h-4 w-[1px] ${isDark ? "bg-zinc-800" : "bg-slate-200"}`} />
 
           {/* Theme Toggle Button */}
           <button
@@ -449,8 +561,7 @@ export default function App() {
                     </div>
                   ) : (
                     events.map((e, idx) => {
-                      const isError = e.message.startsWith("Error");
-                      const isSuccess = e.message.includes("succeeded") || e.message.includes("passed");
+                      const colors = getEventColors(e.message, e.state);
                       return (
                         <div
                           key={idx}
@@ -458,29 +569,15 @@ export default function App() {
                             isDark ? "border-zinc-900/50" : "border-slate-100"
                           }`}
                         >
-                          <span className={isDark ? "text-zinc-600 select-none" : "text-slate-400 select-none"}>
+                          <span className={isDark ? "text-zinc-650 select-none" : "text-slate-400 select-none"}>
                             {new Date(e.timestamp).toLocaleTimeString()}
                           </span>
                           <span
-                            className={`font-semibold shrink-0 ${
-                              isError
-                                ? "text-rose-400 bg-rose-950/20 px-1 rounded"
-                                : isSuccess
-                                ? "text-emerald-400 bg-emerald-950/20 px-1 rounded"
-                                : "text-violet-400 bg-violet-950/20 px-1 rounded"
-                            }`}
+                            className={`shrink-0 px-2 py-0.5 rounded text-[10px] font-mono font-semibold tracking-wider ${colors.tag}`}
                           >
-                            [{e.state}]
+                            {e.state}
                           </span>
-                          <span
-                            className={`${
-                              isError 
-                                ? isDark ? "text-rose-300" : "text-rose-600 font-medium"
-                                : isSuccess 
-                                ? isDark ? "text-zinc-200 font-medium" : "text-slate-900 font-medium"
-                                : isDark ? "text-zinc-400" : "text-slate-600"
-                            }`}
-                          >
+                          <span className={`text-xs ${colors.text}`}>
                             {e.message}
                           </span>
                         </div>
