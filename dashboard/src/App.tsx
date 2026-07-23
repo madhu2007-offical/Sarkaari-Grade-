@@ -59,8 +59,12 @@ export default function App() {
       {/* Sleek Cursor-like Top Header */}
       <header className="border-b border-zinc-800 bg-[#0c0d0e]/80 backdrop-blur-md sticky top-0 z-50 px-6 py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-tr from-violet-600 to-indigo-500 p-2 rounded-lg shadow-lg shadow-violet-500/20">
-            <span className="text-xl font-bold text-white leading-none">🏛️</span>
+          <div className="bg-gradient-to-tr from-violet-600/20 to-indigo-500/20 p-2.5 rounded-lg border border-violet-500/30 shadow-lg shadow-violet-500/5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-violet-400">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.4"/>
+              <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.7"/>
+            </svg>
           </div>
           <div>
             <div className="flex items-center gap-2">
