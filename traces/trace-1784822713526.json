@@ -1,0 +1,21 @@
+{
+  "id": "trace-1784822713526",
+  "bugReport": "When I click Checkout with an empty cart, the app shows an error instead of a friendly message",
+  "targetUrl": "http://localhost:3001",
+  "startedAt": "2026-07-23T16:05:13.526Z",
+  "reproduced": true,
+  "steps": [
+    {
+      "step": 1,
+      "reasoning": "Fallback heuristic: click checkout to surface the bug",
+      "action": {
+        "type": "click",
+        "role": "button",
+        "name": "Checkout"
+      },
+      "snapshotHash": "44136fa355b3"
+    }
+  ],
+  "finalSummary": "Fallback heuristic reproduced the bug: When I click Checkout with an empty cart, the app shows an error instead of a friendly message",
+  "completedAt": "2026-07-23T16:05:14.415Z"
+}
