@@ -39,7 +39,7 @@ export default function App() {
 
   // Light/Dark Theme State
   const [theme, setTheme] = useState<"light" | "dark">(() => {
-    return (localStorage.getItem("sarkaari_theme") as "light" | "dark") || "dark";
+    return (localStorage.getItem("sarkaari_theme") as "light" | "dark") || "light";
   });
 
   const handleStart = async () => {

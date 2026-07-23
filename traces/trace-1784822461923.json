@@ -1,0 +1,31 @@
+{
+  "id": "trace-1784822461923",
+  "bugReport": "The contact form submits successfully even when the required Name field is left empty — no validation error shown",
+  "targetUrl": "http://localhost:3001#contact",
+  "startedAt": "2026-07-23T16:01:01.923Z",
+  "reproduced": true,
+  "steps": [
+    {
+      "step": 1,
+      "reasoning": "Fallback heuristic: submit contact form without name field",
+      "action": {
+        "type": "click",
+        "role": "button",
+        "name": "Submit contact form"
+      },
+      "snapshotHash": "44136fa355b3"
+    },
+    {
+      "step": 2,
+      "reasoning": "Fallback heuristic: submit contact form without name field",
+      "action": {
+        "type": "click",
+        "role": "button",
+        "name": "Submit contact form"
+      },
+      "snapshotHash": "44136fa355b3"
+    }
+  ],
+  "finalSummary": "Fallback heuristic reproduced the bug: The contact form submits successfully even when the required Name field is left empty — no validation error shown",
+  "completedAt": "2026-07-23T16:01:03.746Z"
+}
