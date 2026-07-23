@@ -4,7 +4,7 @@
 -->
 <p align="center">
   <img src="./assets/<img width="1983" height="793" alt="ChatGPT Image Jul 23, 2026, 10_40_19 PM" src="https://github.com/user-attachments/assets/f4348db5-f4ab-428b-977c-72f2fecb3de1" />
-" alt="Sarkaari-Grade QA Agent banner" width="100%">
+
 </p>
 
 <h1 align="center">Sarkaari-Grade QA Agent</h1>
