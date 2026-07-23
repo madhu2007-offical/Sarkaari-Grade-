@@ -553,11 +553,39 @@ export default function App() {
               {activeTab === "logs" && (
                 <div className="font-mono text-xs space-y-2.5">
                   {events.length === 0 ? (
-                    <div className={`h-full flex flex-col items-center justify-center py-20 ${
-                      isDark ? "text-zinc-650" : "text-slate-400"
-                    }`}>
-                      <p className="text-sm font-semibold tracking-wider">CONSOLE READY</p>
-                      <p className="text-[10px] mt-1">Awaiting agent pipeline initiation...</p>
+                    <div className="font-mono text-xs space-y-2.5">
+                      <div className="flex items-start gap-4">
+                        <span className={isDark ? "text-zinc-600 select-none" : "text-slate-400 select-none"}>
+                          {new Date().toLocaleTimeString()}
+                        </span>
+                        <span className={`shrink-0 px-2 py-0.5 rounded text-[10px] font-mono font-semibold tracking-wider ${
+                          isDark ? "text-blue-400 bg-blue-950/20 border border-blue-900/30" : "text-blue-700 bg-blue-50 border border-blue-200"
+                        }`}>
+                          SYSTEM
+                        </span>
+                        <span className={isDark ? "text-blue-400/90" : "text-blue-600"}>
+                          Ready.
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <span className={isDark ? "text-zinc-600 select-none" : "text-slate-400 select-none"}>
+                          {new Date().toLocaleTimeString()}
+                        </span>
+                        <span className={`shrink-0 px-2 py-0.5 rounded text-[10px] font-mono font-semibold tracking-wider ${
+                          isDark ? "text-blue-400 bg-blue-950/20 border border-blue-900/30" : "text-blue-700 bg-blue-50 border border-blue-200"
+                        }`}>
+                          SYSTEM
+                        </span>
+                        <span className={isDark ? "text-blue-400/90" : "text-blue-600"}>
+                          Waiting for bug report...
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-4 pt-1">
+                        <span className={isDark ? "text-zinc-600 select-none" : "text-slate-400 select-none"}>
+                          &gt;
+                        </span>
+                        <span className="text-violet-400 font-bold animate-pulse">█</span>
+                      </div>
                     </div>
                   ) : (
                     events.map((e, idx) => {
