@@ -441,9 +441,11 @@ export default function App() {
               onClick={handleStart}
               disabled={running || !connected}
               className={`w-full py-3.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 mt-4 ${
-                running
-                  ? "bg-zinc-850 border border-zinc-800 text-zinc-500 cursor-not-allowed"
-                  : "bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-lg shadow-violet-600/20 hover:shadow-violet-600/40 border border-violet-500/20"
+                running || !connected
+                  ? isDark
+                    ? "bg-zinc-900 border border-zinc-800 text-zinc-500 cursor-not-allowed opacity-50"
+                    : "bg-slate-100 border border-slate-200 text-slate-400 cursor-not-allowed opacity-50"
+                  : "bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-lg shadow-violet-600/20 hover:shadow-violet-600/40 border border-violet-500/20 cursor-pointer"
               }`}
             >
               {running ? (
@@ -451,6 +453,8 @@ export default function App() {
                   <span className="w-3 h-3 border-2 border-zinc-400 border-t-transparent rounded-full animate-spin" />
                   Running Pipeline
                 </span>
+              ) : !connected ? (
+                "Backend Service Offline"
               ) : (
                 "Initiate QA Agent"
               )}
